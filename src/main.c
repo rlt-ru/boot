@@ -17,17 +17,19 @@ void main(void) {
   MX_GPIO_Init();
   MX_DMA_Init();
 
-  if (button_pressed()) {
-    if (f_mount(&fatfs, "", 1) != FR_OK) {
-    }
+  do {
+    if (!button_pressed()) break;
+    if (f_mount(&fatfs, "", 1) != FR_OK) break;
 
     while (1) {
       HAL_Delay(100);
     }
-  }
+  } while (0);
 
   // start application
   app_launch();
+  // end application
+  HAL_NVIC_SystemReset();
 }
 
 void app_launch(void) {
@@ -53,7 +55,4 @@ void app_launch(void) {
 
   /* Jump to application */
   application();
-
-  // end application
-  HAL_NVIC_SystemReset();
 }
