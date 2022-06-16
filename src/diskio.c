@@ -44,8 +44,8 @@ DSTATUS disk_initialize(BYTE pdrv) {
     return STA_NOINIT;
   } else {
     MX_SDIO_SD_Init();
-    HAL_NVIC_SetPriority(SDIO_DMA_IRQn, 4, 0);  // FIXME to ports
-    HAL_NVIC_EnableIRQ(SDIO_DMA_IRQn);          // FIXME to ports
+    HAL_NVIC_SetPriority(SDIO_DMA_IRQn, 4, 0);
+    HAL_NVIC_EnableIRQ(SDIO_DMA_IRQn);
 
     a_mux_lock(&sd_mux);
 
