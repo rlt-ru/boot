@@ -7,6 +7,7 @@
 FATFS fatfs;
 
 extern void SystemClock_Config(void);
+static bool app_valid_start(void);
 static void app_launch(void);
 typedef void (*app)(void);
 
@@ -18,9 +19,9 @@ void main(void) {
   MX_DMA_Init();
 
   do {
-    if (!button_pressed()) break;
-    if (f_mount(&fatfs, "", 1) != FR_OK) break;
+    if (!button_pressed() && app_valid_start()) break;
 
+    if (f_mount(&fatfs, "", 1) != FR_OK) break;
     while (1) {
       HAL_Delay(100);
     }
@@ -30,6 +31,11 @@ void main(void) {
   app_launch();
   // end application
   HAL_NVIC_SystemReset();
+}
+
+bool app_valid_start(void) {
+  return ((*(__IO uint32_t*)APP_BASE_ADDRESS) & 0x2FFE0000) == 0x20000000 ||
+         ((*(__IO uint32_t*)APP_BASE_ADDRESS) & 0x1FFE0000) == 0x10000000;
 }
 
 void app_launch(void) {
