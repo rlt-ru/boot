@@ -10,3 +10,7 @@ void peripheral_init(void) {
   HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 4, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
 }
+
+uint32_t get_tick_ms(void) {
+  return HAL_GetTick();
+}

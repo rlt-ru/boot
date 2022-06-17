@@ -17,6 +17,7 @@ set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.c
   ${CMAKE_SOURCE_DIR}/src/fatfs/ff.c
   ${CMAKE_SOURCE_DIR}/src/fatfs/ffsystem.c
   ${CMAKE_SOURCE_DIR}/src/fatfs/ffunicode.c
+  ${CMAKE_SOURCE_DIR}/src/eth.c
 )
 
 include(${CMAKE_SOURCE_DIR}/src/lwip/lwip.cmake)

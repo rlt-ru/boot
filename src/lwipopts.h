@@ -25,6 +25,8 @@
  */
 #define NO_SYS 1
 
+#define SYS_LIGHTWEIGHT_PROT 0
+
 /* ---------- Memory options ---------- */
 /* MEM_ALIGNMENT: should be set to the alignment of the CPU for which
    lwIP is compiled. 4 byte alignment -> define MEM_ALIGNMENT to 4, 2
@@ -33,7 +35,7 @@
 
 /* MEM_SIZE: the size of the heap memory. If the application will send
 a lot of data that needs to be copied, this should be set high. */
-#define MEM_SIZE (10 * 1024)
+#define MEM_SIZE (16 * 1024)
 
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
    sends a lot of data out of ROM (or other static memory), this
@@ -41,16 +43,16 @@ a lot of data that needs to be copied, this should be set high. */
 #define MEMP_NUM_PBUF 10
 /* MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
    per active UDP "connection". */
-#define MEMP_NUM_UDP_PCB 6
+#define MEMP_NUM_UDP_PCB 4
 /* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
    connections. */
-#define MEMP_NUM_TCP_PCB 10
+#define MEMP_NUM_TCP_PCB 4
 /* MEMP_NUM_TCP_PCB_LISTEN: the number of listening TCP
    connections. */
-#define MEMP_NUM_TCP_PCB_LISTEN 5
+#define MEMP_NUM_TCP_PCB_LISTEN 2
 /* MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP
    segments. */
-#define MEMP_NUM_TCP_SEG 8
+#define MEMP_NUM_TCP_SEG 16
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
 #define MEMP_NUM_SYS_TIMEOUT 10
@@ -93,7 +95,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define LWIP_DHCP 0
 
 /* ---------- UDP options ---------- */
-#define LWIP_UDP 1
+#define LWIP_UDP 0
 #define UDP_TTL 255
 
 /* ---------- Statistics options ---------- */
@@ -103,7 +105,7 @@ a lot of data that needs to be copied, this should be set high. */
 /* LWIP_NETIF_LINK_CALLBACK==1: Support a callback function from an interface
  * whenever the link changes (i.e., link down)
  */
-#define LWIP_NETIF_LINK_CALLBACK 1
+#define LWIP_NETIF_LINK_CALLBACK 0
 
 /*
    --------------------------------------
