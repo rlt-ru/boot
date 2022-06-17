@@ -39,7 +39,7 @@ void main(void) {
       break;
     }
 
-    boot_state.flags.b.fatfs_ready = (f_mount(&fatfs, "", 1) == FR_OK) ? 1 : 0;
+    boot_state.flags.b.fatfs_ready = (FR_OK == f_mount(&fatfs, "", 1)) ? 1 : 0;
     boot_state.flags.b.eth_ready = (0 == eth_init()) ? 1 : 0;
 
     while (1) {
