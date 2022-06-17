@@ -19,7 +19,6 @@ add_link_options(-Wl,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/button.c
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/port.c
   ${CMAKE_CURRENT_SOURCE_DIR}/src/system.c)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})

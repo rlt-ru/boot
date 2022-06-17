@@ -1,7 +1,20 @@
+#include <dma.h>
+#include <gpio.h>
+#include <main.h>
+
 #include "port.h"
 
-void peripheral_reset(void)
-{
+uint32_t get_tick_ms(void) { return HAL_GetTick(); }
+
+void peripheral_init(void) {
+  MX_GPIO_Init();
+  MX_DMA_Init();
+
+  HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 4, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+}
+
+void peripheral_reset(void) {
   /* Reset the RCC clock configuration to the default reset state ------------*/
   /* Set HSION bit */
   RCC->CR |= (uint32_t)0x00000001;
@@ -22,13 +35,13 @@ void peripheral_reset(void)
   RCC->CIR = 0x00000000;
 
   /* Reset NVIC */
-  int cnt = sizeof(NVIC->ICPR) >> 2;//8 for stm32f4xx
-  for(int i = 0; i < cnt; i++){
+  int cnt = sizeof(NVIC->ICPR) >> 2;  // 8 for stm32f4xx
+  for (int i = 0; i < cnt; i++) {
     NVIC->ICER[i] = ~0;
     NVIC->ICPR[i] = ~0;
   }
-  cnt = sizeof(NVIC->IP);//240 for stm32f4xx
-  for(int i = 0; i < cnt; i++){
+  cnt = sizeof(NVIC->IP);  // 240 for stm32f4xx
+  for (int i = 0; i < cnt; i++) {
     NVIC->IP[i] = 0;
   }
 }
