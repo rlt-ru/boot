@@ -23,6 +23,7 @@ set(SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/button.c
   ${CMAKE_CURRENT_SOURCE_DIR}/src/system.c)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
+target_link_libraries(${PROJECT_NAME}.elf ${LIBS} ${MODULES})
 
 set(ARTIFACT_NAME ${PROJECT_NAME}-${VER_MAJ}.${VER_MIN}.${VER_DEV})
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${ARTIFACT_NAME}.hex)

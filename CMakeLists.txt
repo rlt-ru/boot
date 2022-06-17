@@ -19,4 +19,8 @@ set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.c
   ${CMAKE_SOURCE_DIR}/src/fatfs/ffunicode.c
 )
 
+include(${CMAKE_SOURCE_DIR}/src/lwip/lwip.cmake)
+
+set(LIBS lwipcore)
+
 add_subdirectory(ports/satellit-a)
