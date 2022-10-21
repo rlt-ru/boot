@@ -3,7 +3,6 @@
 #include <port.h>
 
 #include "app.h"
-#include "eth.h"
 
 FATFS fatfs;
 
@@ -16,7 +15,6 @@ typedef struct {
       uint32_t button_pressed : 1;
       uint32_t app_valid : 1;
       uint32_t fatfs_ready : 1;
-      uint32_t eth_ready : 1;
     } b;
   } flags;
 } boot_state_t;
@@ -34,16 +32,19 @@ void main(void) {
   do {
     boot_state.flags.b.button_pressed = button_pressed() ? 1 : 0;
     boot_state.flags.b.app_valid = app_valid_start() ? 1 : 0;
+    boot_state.flags.b.fatfs_ready = (FR_OK == f_mount(&fatfs, "", 1)) ? 1 : 0;
 
-    if (!boot_state.flags.b.button_pressed && boot_state.flags.b.app_valid) {
-      break;
+    if (!boot_state.flags.b.button_pressed) {
+      if (boot_state.flags.b.fatfs_ready) {
+        app_update();
+      }
+
+      if (boot_state.flags.b.app_valid) {
+        break;
+      }
     }
 
-    boot_state.flags.b.fatfs_ready = (FR_OK == f_mount(&fatfs, "", 1)) ? 1 : 0;
-    boot_state.flags.b.eth_ready = (0 == eth_init()) ? 1 : 0;
-
     while (1) {
-      eth_cycle();
     }
   } while (0);
 

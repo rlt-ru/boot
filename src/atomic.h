@@ -5,7 +5,7 @@
 #ifndef CORE_SRC_ATOMIC_H_
 #define CORE_SRC_ATOMIC_H_
 
-#include <core_cm4.h>
+#include <cmsis_gcc.h>
 #include <stdint.h>
 #include <stdbool.h>
 

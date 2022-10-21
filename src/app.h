@@ -6,5 +6,6 @@
 
 bool app_valid_start(void);
 void app_launch(void);
+int app_update(void);
 
 #endif //APP_H

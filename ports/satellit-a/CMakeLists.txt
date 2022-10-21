@@ -7,9 +7,9 @@ set(VER_DEV 1)
 set(VNAR "ВНАР-X")
 
 # redefine linker-script
-set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/STM32F407IGTx_FLASH.ld)
+set(LINKER_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/STM32F407IGTx_FLASH.ld)
 
-set(MCU ${CMAKE_CURRENT_SOURCE_DIR}/cube)
+set(MCU ${CMAKE_CURRENT_LIST_DIR}/cube)
 include(cube)
 
 add_definitions(-DSTM32F407xx)
@@ -17,9 +17,10 @@ add_definitions(-DVNAR="${VNAR}" -DVER_STR="${VER_MAJ}.${VER_MIN}.${VER_DEV}"
   -DVER_MAJ=${VER_MAJ} -DVER_MIN=${VER_MIN} -DVER_DEV=${VER_DEV})
 add_link_options(-Wl,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/button.c
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/system.c)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/src)
+set(SOURCES ${SOURCES} ${CMAKE_CURRENT_LIST_DIR}/src/button.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/system.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/diskio.c)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 target_link_libraries(${PROJECT_NAME}.elf ${LIBS} ${MODULES})

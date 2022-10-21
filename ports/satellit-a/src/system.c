@@ -45,3 +45,11 @@ void peripheral_reset(void) {
     NVIC->IP[i] = 0;
   }
 }
+
+int erase_flash(unsigned int offset, unsigned int len) {
+  return -1;
+}
+
+int write_flash(unsigned int offset, char *buff, unsigned int len) {
+  return -1;
+}
