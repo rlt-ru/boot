@@ -76,7 +76,7 @@ int app_check_file(FIL *f) {
   }
 
   unsigned int readed = 0;
-  unsigned long fcrc = 0;
+  unsigned long crc_acc = 0;
   size_t cnt = 0;
   char ch;
   while (1) {
@@ -85,12 +85,12 @@ int app_check_file(FIL *f) {
     if (readed != 1) {
       break;
     }
-    fcrc = streamcrc(fcrc, ch);
+    crc_acc = streamcrc_acc(crc_acc, ch);
     cnt++;
   }
-  fcrc = streamcrc_end(fcrc, cnt);
+  crc_acc = streamcrc_end(crc_acc, cnt);
 
-  if(crc != fcrc) {
+  if(crc != crc_acc) {
     return -1;
   }
 

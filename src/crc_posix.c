@@ -68,18 +68,18 @@ unsigned long memcrc(const unsigned char *b, size_t n) {
   return ~s;
 }
 
-unsigned long streamcrc(unsigned long s, char b) {
-  return (s << 8) ^ crctab[(s >> 24) ^ (unsigned)b];
+unsigned long streamcrc_acc(unsigned long acc, char b) {
+  return (acc << 8) ^ crctab[(acc >> 24) ^ (unsigned)b];
 }
 
-unsigned long streamcrc_end(unsigned long s, size_t n) {
+unsigned long streamcrc_end(unsigned long acc, size_t n) {
   register unsigned c;
   /* Extend with the length of the string. */
   while (n != 0) {
     c = n & 0377;
     n >>= 8;
-    s = (s << 8) ^ crctab[(s >> 24) ^ c];
+    acc = (acc << 8) ^ crctab[(acc >> 24) ^ c];
   }
 
-  return ~s;
+  return ~acc;
 }
