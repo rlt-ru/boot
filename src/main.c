@@ -15,6 +15,7 @@ typedef struct {
       uint32_t button_pressed : 1;
       uint32_t app_valid : 1;
       uint32_t fatfs_ready : 1;
+      uint32_t updated : 1;
     } b;
   } flags;
 } boot_state_t;
@@ -36,7 +37,7 @@ void main(void) {
 
     if (!boot_state.flags.b.button_pressed) {
       if (boot_state.flags.b.fatfs_ready) {
-        app_update();
+        boot_state.flags.b.updated = app_update() ? 0 : 1;
       }
 
       if (boot_state.flags.b.app_valid) {

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <ff.h>
 #include <port.h>
+#include "crc_posix.h"
 
 #define APP_FIRMWARE_FILE_NAME "FIRMWARE/firmware.fpk"
 #define APP_FIRMWARE_FILE_READY "FIRMWARE/firmware.fpk.last"
@@ -70,12 +71,31 @@ int app_check_file(FIL *f) {
   int p = app_read_line(f, params, sizeof(params));
 
   uint16_t crc;
-  if(scanf("%hu", &crc) != 1) {
+  if(sscanf(params, "%lu", &crc) != 1) {
     return -1;
   }
 
-  
+  unsigned int readed = 0;
+  unsigned long fcrc = 0;
+  size_t cnt = 0;
+  char ch;
+  while (1) {
+    readed = 0;
+    f_read(f, &ch, 1, &readed);
+    if (readed != 1) {
+      break;
+    }
+    fcrc = streamcrc(fcrc, ch);
+    cnt++;
+  }
+  fcrc = streamcrc_end(fcrc, cnt);
 
+  if(crc != fcrc) {
+    return -1;
+  }
+
+  f_lseek(f, 0);
+  app_read_line(f, params, sizeof(params));
   return 0;
 }
 
