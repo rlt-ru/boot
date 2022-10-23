@@ -99,31 +99,39 @@ int app_check_file(FIL *f) {
   return 0;
 }
 
-FRESULT app_flash_file(FIL *f) {
-  FRESULT result;
+int app_flash_file(FIL *f) {
   static char buff[512];
   unsigned int offset = 0;
+
+  int result = -1;
   while (1) {
     unsigned int readed = 0;
-    result = f_read(f, buff, sizeof(buff), &readed);
-
-    if (result != FR_OK) {
+    if (f_read(f, buff, sizeof(buff), &readed) != FR_OK) {
       // err
+      result = -1;
+      break;
+    }
+
+    if (readed == 0) {
+      // end
+      result = 0;
       break;
     }
 
     // flash
     if (write_flash(offset, buff, readed)) {
       // err
+      result = -1;
+      break;
+    }
+
+    if (readed < sizeof(buff)) {
+      // end
+      result = 0;
       break;
     }
 
     offset += readed;
-
-    if (readed < sizeof(buff)) {
-      // end
-      break;
-    }
   }
   return result;
 }
@@ -145,7 +153,7 @@ int app_update(void) {
     if (erase_flash(0, file_size)) {
       break;
     }
-    if (app_flash_file(&f) != FR_OK) {
+    if (app_flash_file(&f)) {
       break;
     }
 
