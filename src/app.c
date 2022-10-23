@@ -71,7 +71,7 @@ int app_check_file(FIL *f) {
   int p = app_read_line(f, params, sizeof(params));
 
   uint16_t crc;
-  if(sscanf(params, "%lu", &crc) != 1) {
+  if(sscanf(params, "CRC:%lu", &crc) != 1) {
     return -1;
   }
 
@@ -81,8 +81,11 @@ int app_check_file(FIL *f) {
   char ch;
   while (1) {
     readed = 0;
-    f_read(f, &ch, 1, &readed);
-    if (readed != 1) {
+    if(f_read(f, &ch, 1, &readed) != FR_OK) {
+      return -1;
+    }
+
+    if (readed == 0) {
       break;
     }
     crc_acc = streamcrc_acc(crc_acc, ch);
