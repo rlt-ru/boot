@@ -18,17 +18,18 @@ void led_toggle(LED led) {
 
   if(strob) {
     strob--;
-    return;
   }
 
-  if(_l[led]) {
-    _l[led] = 0;
-    led_off(led);
-  } else {
-    _l[led] = 1;
-    led_on(led);
+  if(!strob) {
+    if(_l[led]) {
+      _l[led] = 0;
+      led_off(led);
+    } else {
+      _l[led] = 1;
+      led_on(led);
+    }
+    strob = led_strob;
   }
-  strob = led_strob;
 }
 
 bool app_valid_start(void) {

@@ -33,9 +33,9 @@ void main(void) {
     for(int i = 0; i < 100; i++) {
       led_toggle(LED_RED);
       cnt += button_pressed() ? 1 : 0;
-      HAL_Delay(20);
+      HAL_Delay(15);
     }
-    boot_state.flags.b.button_pressed = cnt > 10 ? 1 : 0;
+    boot_state.flags.b.button_pressed = cnt > 5 ? 1 : 0;
     boot_state.flags.b.app_valid = app_valid_start() ? 1 : 0;
     boot_state.flags.b.fatfs_ready = (FR_OK == f_mount(&fatfs, "", 1)) ? 1 : 0;
 
