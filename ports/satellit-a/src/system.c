@@ -57,3 +57,10 @@ int erase_flash(unsigned int offset, unsigned int len) { return -1; }
 int write_flash(unsigned int offset, char *buff, unsigned int len) {
   return -1;
 }
+
+void led_on(LED led) {
+
+}
+void led_off(LED led) {
+
+}

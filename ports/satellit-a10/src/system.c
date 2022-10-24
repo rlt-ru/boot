@@ -100,3 +100,28 @@ int write_flash(unsigned int offset, char *buff, unsigned int len) {
 
   return 0;
 }
+
+void led_on(LED led) {
+  switch (led) {
+    case LED_GREEN:
+      HAL_GPIO_WritePin(LED0G_GPIO_Port, LED0G_Pin, GPIO_PIN_RESET);
+      break;
+    case LED_RED:
+      HAL_GPIO_WritePin(LED0R_GPIO_Port, LED0R_Pin, GPIO_PIN_RESET);
+      break;
+    default:
+      break;
+  }
+}
+void led_off(LED led) {
+  switch (led) {
+    case LED_GREEN:
+      HAL_GPIO_WritePin(LED0G_GPIO_Port, LED0G_Pin, GPIO_PIN_SET);
+      break;
+    case LED_RED:
+      HAL_GPIO_WritePin(LED0R_GPIO_Port, LED0R_Pin, GPIO_PIN_SET);
+      break;
+    default:
+      break;
+  }
+}

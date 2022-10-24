@@ -1,13 +1,35 @@
 #include "app.h"
 #include <stdio.h>
 #include "ff.h"
-#include <port.h>
 #include "crc_posix.h"
 
 #define APP_FIRMWARE_FILE_NAME "FIRMWARE/firmware.fpk"
 #define APP_FIRMWARE_FILE_READY "FIRMWARE/firmware.lst"
 
 typedef void (*app)(void);
+
+uint32_t led_strob = 1;
+void led_strob_set(uint32_t strob) {
+  led_strob = strob;
+}
+void led_toggle(LED led) {
+  static LED _l[LED_COUNT] = {0};
+  static uint32_t strob = 0;
+
+  if(strob) {
+    strob--;
+    return;
+  }
+
+  if(_l[led]) {
+    _l[led] = 0;
+    led_off(led);
+  } else {
+    _l[led] = 1;
+    led_on(led);
+  }
+  strob = led_strob;
+}
 
 bool app_valid_start(void) {
   uint32_t addr = *(__IO uint32_t *)APP_BASE_ADDRESS;
@@ -75,11 +97,14 @@ int app_check_file(FIL *f) {
     return -1;
   }
 
+  led_strob = f_size(f) / 100;
+
   unsigned int readed = 0;
   unsigned long crc_acc = 0;
   size_t cnt = 0;
   char ch;
   while (1) {
+    led_toggle(LED_GREEN);
     readed = 0;
     if(f_read(f, &ch, 1, &readed) != FR_OK) {
       return -1;
@@ -106,6 +131,8 @@ int app_flash_file(FIL *f) {
   static char buff[512];
   unsigned int offset = 0;
 
+  led_strob = 20;
+
   int result = -1;
   while (1) {
     unsigned int readed = 0;
@@ -120,6 +147,8 @@ int app_flash_file(FIL *f) {
       result = 0;
       break;
     }
+
+    led_toggle(LED_GREEN);
 
     // flash
     if (write_flash(offset, buff, readed)) {
@@ -145,6 +174,10 @@ int app_update(void) {
   if (result != FR_OK) {
     return -1;
   }
+
+  led_off(LED_RED);
+  led_on(LED_GREEN);
+  HAL_Delay(100);
 
   do {
     uint32_t file_size = f_size(&f);
