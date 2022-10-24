@@ -6,8 +6,6 @@
 
 FATFS fatfs;
 
-extern void SystemClock_Config(void);
-
 typedef struct {
   union {
     uint32_t value;
@@ -23,9 +21,6 @@ typedef struct {
 boot_state_t boot_state;
 
 void main(void) {
-  HAL_Init();
-  SystemClock_Config();
-
   peripheral_init();
 
   boot_state.flags.value = 0;
@@ -38,6 +33,9 @@ void main(void) {
     if (!boot_state.flags.b.button_pressed) {
       if (boot_state.flags.b.fatfs_ready) {
         boot_state.flags.b.updated = app_update() ? 0 : 1;
+        if(boot_state.flags.b.updated) {
+          boot_state.flags.b.app_valid = app_valid_start() ? 1 : 0;
+        }
       }
 
       if (boot_state.flags.b.app_valid) {

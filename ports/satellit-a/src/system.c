@@ -4,9 +4,13 @@
 
 #include "port.h"
 
+extern void SystemClock_Config(void);
 uint32_t get_tick_ms(void) { return HAL_GetTick(); }
 
 void peripheral_init(void) {
+  HAL_Init();
+  SystemClock_Config();
+
   MX_GPIO_Init();
   MX_DMA_Init();
 
@@ -15,6 +19,8 @@ void peripheral_init(void) {
 }
 
 void peripheral_reset(void) {
+  HAL_DeInit();
+
   /* Reset the RCC clock configuration to the default reset state ------------*/
   /* Set HSION bit */
   RCC->CR |= (uint32_t)0x00000001;
@@ -46,9 +52,7 @@ void peripheral_reset(void) {
   }
 }
 
-int erase_flash(unsigned int offset, unsigned int len) {
-  return -1;
-}
+int erase_flash(unsigned int offset, unsigned int len) { return -1; }
 
 int write_flash(unsigned int offset, char *buff, unsigned int len) {
   return -1;

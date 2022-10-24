@@ -3,11 +3,32 @@
 
 #include "port.h"
 
+extern void SystemClock_Config(void);
 uint32_t get_tick_ms(void) { return HAL_GetTick(); }
 
-void peripheral_init(void) { MX_GPIO_Init(); }
+void peripheral_init(void) {
+  HAL_Init();
+  SystemClock_Config();
 
-void peripheral_reset(void) { SystemInit(); }
+  MX_GPIO_Init();
+}
+
+void peripheral_reset(void) {
+  HAL_DeInit();
+
+  SystemInit();
+
+  /* Reset NVIC */
+  int cnt = sizeof(NVIC->ICPR) >> 2;
+  for (int i = 0; i < cnt; i++) {
+    NVIC->ICER[i] = ~0;
+    NVIC->ICPR[i] = ~0;
+  }
+  cnt = sizeof(NVIC->IPR);
+  for (int i = 0; i < cnt; i++) {
+    NVIC->IPR[i] = 0;
+  }
+}
 
 static uint32_t GetPage(uint32_t Addr) {
   uint32_t page = 0;
@@ -76,6 +97,6 @@ int write_flash(unsigned int offset, char *buff, unsigned int len) {
   flash_ret = HAL_FLASH_Lock();
 
   HAL_ICACHE_Enable();
-  
+
   return 0;
 }

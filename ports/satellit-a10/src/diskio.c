@@ -109,7 +109,7 @@ DRESULT disk_read(BYTE pdrv,  /* Physical drive number to identify the drive */
 /*-----------------------------------------------------------------------*/
 /* Write Sector(s)                                                       */
 /*-----------------------------------------------------------------------*/
-
+#define _USE_WRITE 1
 #if _USE_WRITE
 DRESULT disk_write(BYTE pdrv, /* Physical drive number to identify the drive */
                    const BYTE *buff, /* Data to be written */
@@ -146,7 +146,7 @@ DRESULT disk_write(BYTE pdrv, /* Physical drive number to identify the drive */
     UINT to = HAL_GetTick();
     while (!a_mux_lock_try(&sd_mux)) {
       if (HAL_GetTick() - to > SD_DISK_TIMEOUT) {
-        HAL_DMA_Abort_IT(&hsd1);
+        HAL_SD_Abort_IT(&hsd1);
         return RES_ERROR;
       }
       HAL_Delay(1);
@@ -164,7 +164,7 @@ DRESULT disk_write(BYTE pdrv, /* Physical drive number to identify the drive */
 /*-----------------------------------------------------------------------*/
 /* Miscellaneous Functions                                               */
 /*-----------------------------------------------------------------------*/
-
+#define _USE_IOCTL 1
 #if _USE_IOCTL
 DRESULT disk_ioctl(BYTE pdrv, /* Physical drive number (0..) */
                    BYTE cmd,  /* Control code */

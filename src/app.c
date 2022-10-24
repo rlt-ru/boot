@@ -1,17 +1,18 @@
 #include "app.h"
 #include <stdio.h>
-#include <ff.h>
+#include "ff.h"
 #include <port.h>
 #include "crc_posix.h"
 
 #define APP_FIRMWARE_FILE_NAME "FIRMWARE/firmware.fpk"
-#define APP_FIRMWARE_FILE_READY "FIRMWARE/firmware.fpk.last"
+#define APP_FIRMWARE_FILE_READY "FIRMWARE/firmware.lst"
 
 typedef void (*app)(void);
 
 bool app_valid_start(void) {
-  return ((*(__IO uint32_t *)APP_BASE_ADDRESS) & 0x2FFE0000) == 0x20000000 ||
-         ((*(__IO uint32_t *)APP_BASE_ADDRESS) & 0x1FFE0000) == 0x10000000;
+  uint32_t addr = *(__IO uint32_t *)APP_BASE_ADDRESS;
+  return (addr & 0x20000000) == 0x20000000 ||
+         (addr & 0x10000000) == 0x10000000;
 }
 
 void app_launch(void) {
@@ -33,7 +34,6 @@ void app_launch(void) {
     __set_PSP(*(__IO uint32_t *)APP_BASE_ADDRESS);
     __set_MSP(*(__IO uint32_t *)APP_BASE_ADDRESS);
   }
-  __enable_irq();
 
   /* Jump to application */
   application();
@@ -70,7 +70,7 @@ int app_check_file(FIL *f) {
   char params[256];
   int p = app_read_line(f, params, sizeof(params));
 
-  uint16_t crc;
+  unsigned long crc;
   if(sscanf(params, "CRC:%lu", &crc) != 1) {
     return -1;
   }
@@ -161,7 +161,7 @@ int app_update(void) {
     }
 
     f_close(&f);
-    // f_rename(APP_FIRMWARE_FILE_NAME, APP_FIRMWARE_FILE_READY);
+    f_rename(APP_FIRMWARE_FILE_NAME, APP_FIRMWARE_FILE_READY);
 
     return 0;
   } while (0);
