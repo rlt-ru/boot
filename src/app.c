@@ -178,7 +178,6 @@ int app_update(void) {
 
   led_off(LED_RED);
   led_on(LED_GREEN);
-  HAL_Delay(100);
 
   do {
     uint32_t file_size = f_size(&f);

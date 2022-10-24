@@ -42,8 +42,6 @@ void main(void) {
     if (!boot_state.flags.b.button_pressed) {
       if (boot_state.flags.b.fatfs_ready) {
         boot_state.flags.b.updated = app_update() ? 0 : 1;
-        led_off(LED_GREEN);
-        led_on(LED_RED);
         if(boot_state.flags.b.updated) {
           boot_state.flags.b.app_valid = app_valid_start() ? 1 : 0;
         }
