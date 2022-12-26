@@ -45,7 +45,7 @@ void app_launch(void) {
 
   __disable_irq();
   {
-    peripheral_reset();
+//    peripheral_reset();
 
     SCB->VTOR = APP_BASE_ADDRESS;
     __DSB();
@@ -55,6 +55,7 @@ void app_launch(void) {
     __set_PSP(*(__IO uint32_t *)APP_BASE_ADDRESS);
     __set_MSP(*(__IO uint32_t *)APP_BASE_ADDRESS);
   }
+  __enable_irq();
 
   /* Jump to application */
   application();

@@ -21,6 +21,7 @@ typedef struct {
 boot_state_t boot_state;
 
 void main(void) {
+  app_launch();
   peripheral_init();
 
   led_on(LED_RED);

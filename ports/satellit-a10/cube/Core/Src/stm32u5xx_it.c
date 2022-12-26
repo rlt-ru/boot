@@ -55,26 +55,8 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern ADC_HandleTypeDef hadc4;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel9;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel8;
-extern I2C_HandleTypeDef hi2c3;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel1;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel0;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel3;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel2;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel5;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel4;
-extern UART_HandleTypeDef hlpuart1;
-extern UART_HandleTypeDef huart2;
-extern UART_HandleTypeDef huart3;
 extern SD_HandleTypeDef hsd1;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel11;
-extern DMA_HandleTypeDef handle_GPDMA1_Channel10;
-extern SPI_HandleTypeDef hspi3;
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
-extern TIM_HandleTypeDef htim3;
-
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -95,6 +77,21 @@ void NMI_Handler(void)
   {
   }
   /* USER CODE END NonMaskableInt_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Hard fault interrupt.
+  */
+void HardFault_Handler(void)
+{
+  /* USER CODE BEGIN HardFault_IRQn 0 */
+
+  /* USER CODE END HardFault_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+    /* USER CODE END W1_HardFault_IRQn 0 */
+  }
 }
 
 /**
@@ -128,6 +125,21 @@ void BusFault_Handler(void)
 }
 
 /**
+  * @brief This function handles Undefined instruction or illegal state.
+  */
+void UsageFault_Handler(void)
+{
+  /* USER CODE BEGIN UsageFault_IRQn 0 */
+
+  /* USER CODE END UsageFault_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+    /* USER CODE END W1_UsageFault_IRQn 0 */
+  }
+}
+
+/**
   * @brief This function handles System service call via SWI instruction.
   */
 void SVC_Handler(void)
@@ -151,6 +163,33 @@ void DebugMon_Handler(void)
   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
 
   /* USER CODE END DebugMonitor_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Pendable request for system service.
+  */
+void PendSV_Handler(void)
+{
+  /* USER CODE BEGIN PendSV_IRQn 0 */
+
+  /* USER CODE END PendSV_IRQn 0 */
+  /* USER CODE BEGIN PendSV_IRQn 1 */
+
+  /* USER CODE END PendSV_IRQn 1 */
+}
+
+/**
+  * @brief This function handles System tick timer.
+  */
+void SysTick_Handler(void)
+{
+  /* USER CODE BEGIN SysTick_IRQn 0 */
+
+  /* USER CODE END SysTick_IRQn 0 */
+  HAL_IncTick();
+  /* USER CODE BEGIN SysTick_IRQn 1 */
+
+  /* USER CODE END SysTick_IRQn 1 */
 }
 
 /******************************************************************************/
@@ -315,146 +354,6 @@ void EXTI14_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles GPDMA1 Channel 0 global interrupt.
-  */
-void GPDMA1_Channel0_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel0_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel0_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel0);
-  /* USER CODE BEGIN GPDMA1_Channel0_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel0_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 1 global interrupt.
-  */
-void GPDMA1_Channel1_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel1_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel1_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel1);
-  /* USER CODE BEGIN GPDMA1_Channel1_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 2 global interrupt.
-  */
-void GPDMA1_Channel2_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel2_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel2_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel2);
-  /* USER CODE BEGIN GPDMA1_Channel2_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 3 global interrupt.
-  */
-void GPDMA1_Channel3_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel3_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel3_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel3);
-  /* USER CODE BEGIN GPDMA1_Channel3_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 4 global interrupt.
-  */
-void GPDMA1_Channel4_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel4_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel4_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel4);
-  /* USER CODE BEGIN GPDMA1_Channel4_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel4_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 5 global interrupt.
-  */
-void GPDMA1_Channel5_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel5_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel5_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel5);
-  /* USER CODE BEGIN GPDMA1_Channel5_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel5_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM3 global interrupt.
-  */
-void TIM3_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM3_IRQn 0 */
-
-  /* USER CODE END TIM3_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim3);
-  /* USER CODE BEGIN TIM3_IRQn 1 */
-
-  /* USER CODE END TIM3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USART2 global interrupt.
-  */
-void USART2_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART2_IRQn 0 */
-
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN USART2_IRQn 1 */
-
-  /* USER CODE END USART2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USART3 global interrupt.
-  */
-void USART3_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART3_IRQn 0 */
-
-  /* USER CODE END USART3_IRQn 0 */
-  HAL_UART_IRQHandler(&huart3);
-  /* USER CODE BEGIN USART3_IRQn 1 */
-
-  /* USER CODE END USART3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles LPUART1 global interrupt.
-  */
-void LPUART1_IRQHandler(void)
-{
-  /* USER CODE BEGIN LPUART1_IRQn 0 */
-
-  /* USER CODE END LPUART1_IRQn 0 */
-  HAL_UART_IRQHandler(&hlpuart1);
-  /* USER CODE BEGIN LPUART1_IRQn 1 */
-
-  /* USER CODE END LPUART1_IRQn 1 */
-}
-
-/**
   * @brief This function handles USB OTG FS global interrupt.
   */
 void OTG_FS_IRQHandler(void)
@@ -480,118 +379,6 @@ void SDMMC1_IRQHandler(void)
   /* USER CODE BEGIN SDMMC1_IRQn 1 */
 
   /* USER CODE END SDMMC1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 8 global interrupt.
-  */
-void GPDMA1_Channel8_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel8_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel8_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel8);
-  /* USER CODE BEGIN GPDMA1_Channel8_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel8_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 9 global interrupt.
-  */
-void GPDMA1_Channel9_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel9_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel9_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel9);
-  /* USER CODE BEGIN GPDMA1_Channel9_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel9_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 10 global interrupt.
-  */
-void GPDMA1_Channel10_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel10_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel10_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel10);
-  /* USER CODE BEGIN GPDMA1_Channel10_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel10_IRQn 1 */
-}
-
-/**
-  * @brief This function handles GPDMA1 Channel 11 global interrupt.
-  */
-void GPDMA1_Channel11_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel11_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel11_IRQn 0 */
-  HAL_DMA_IRQHandler(&handle_GPDMA1_Channel11);
-  /* USER CODE BEGIN GPDMA1_Channel11_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel11_IRQn 1 */
-}
-
-/**
-  * @brief This function handles I2C3 event interrupt.
-  */
-void I2C3_EV_IRQHandler(void)
-{
-  /* USER CODE BEGIN I2C3_EV_IRQn 0 */
-
-  /* USER CODE END I2C3_EV_IRQn 0 */
-  HAL_I2C_EV_IRQHandler(&hi2c3);
-  /* USER CODE BEGIN I2C3_EV_IRQn 1 */
-
-  /* USER CODE END I2C3_EV_IRQn 1 */
-}
-
-/**
-  * @brief This function handles I2C3 error interrupt.
-  */
-void I2C3_ER_IRQHandler(void)
-{
-  /* USER CODE BEGIN I2C3_ER_IRQn 0 */
-
-  /* USER CODE END I2C3_ER_IRQn 0 */
-  HAL_I2C_ER_IRQHandler(&hi2c3);
-  /* USER CODE BEGIN I2C3_ER_IRQn 1 */
-
-  /* USER CODE END I2C3_ER_IRQn 1 */
-}
-
-/**
-  * @brief This function handles SPI3 global interrupt.
-  */
-void SPI3_IRQHandler(void)
-{
-  /* USER CODE BEGIN SPI3_IRQn 0 */
-
-  /* USER CODE END SPI3_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi3);
-  /* USER CODE BEGIN SPI3_IRQn 1 */
-
-  /* USER CODE END SPI3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles ADC4 (12bits) global interrupt.
-  */
-void ADC4_IRQHandler(void)
-{
-  /* USER CODE BEGIN ADC4_IRQn 0 */
-
-  /* USER CODE END ADC4_IRQn 0 */
-  HAL_ADC_IRQHandler(&hadc4);
-  /* USER CODE BEGIN ADC4_IRQn 1 */
-
-  /* USER CODE END ADC4_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -47,10 +47,14 @@
 
 /* Exported functions prototypes ---------------------------------------------*/
 void NMI_Handler(void);
+void HardFault_Handler(void);
 void MemManage_Handler(void);
 void BusFault_Handler(void);
+void UsageFault_Handler(void);
 void SVC_Handler(void);
 void DebugMon_Handler(void);
+void PendSV_Handler(void);
+void SysTick_Handler(void);
 void EXTI0_IRQHandler(void);
 void EXTI1_IRQHandler(void);
 void EXTI2_IRQHandler(void);
@@ -62,26 +66,8 @@ void EXTI7_IRQHandler(void);
 void EXTI10_IRQHandler(void);
 void EXTI13_IRQHandler(void);
 void EXTI14_IRQHandler(void);
-void GPDMA1_Channel0_IRQHandler(void);
-void GPDMA1_Channel1_IRQHandler(void);
-void GPDMA1_Channel2_IRQHandler(void);
-void GPDMA1_Channel3_IRQHandler(void);
-void GPDMA1_Channel4_IRQHandler(void);
-void GPDMA1_Channel5_IRQHandler(void);
-void TIM3_IRQHandler(void);
-void USART2_IRQHandler(void);
-void USART3_IRQHandler(void);
-void LPUART1_IRQHandler(void);
 void OTG_FS_IRQHandler(void);
 void SDMMC1_IRQHandler(void);
-void GPDMA1_Channel8_IRQHandler(void);
-void GPDMA1_Channel9_IRQHandler(void);
-void GPDMA1_Channel10_IRQHandler(void);
-void GPDMA1_Channel11_IRQHandler(void);
-void I2C3_EV_IRQHandler(void);
-void I2C3_ER_IRQHandler(void);
-void SPI3_IRQHandler(void);
-void ADC4_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

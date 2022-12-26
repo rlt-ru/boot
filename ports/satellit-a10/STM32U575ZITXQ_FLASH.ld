@@ -115,13 +115,6 @@ SECTIONS
     PROVIDE_HIDDEN (__fini_array_end = .);
   } >FLASH
 
-  .elog :
-  {
-    . = ALIGN(4);
-    elog_strings = .;
-    *(elog elog* elog.*)
-  } >FLASH
-
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
@@ -169,6 +162,7 @@ SECTIONS
     libc.a ( * )
     libm.a ( * )
     libgcc.a ( * )
+    libg.a ( * )
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
