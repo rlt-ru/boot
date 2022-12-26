@@ -2,14 +2,30 @@
 #include <main.h>
 
 #include "port.h"
+#include "icache.h"
 
 extern void SystemClock_Config(void);
+void PeriphCommonClock_Config(void);
+
+__weak void PeriphCommonClock_Config(void) {
+  __NOP();
+}
+
 uint32_t get_tick_ms(void) { return HAL_GetTick(); }
 
 void peripheral_init(void) {
+  uwTickPrio = TICK_INT_PRIORITY;
   HAL_Init();
   SystemClock_Config();
+  PeriphCommonClock_Config();
 
+  __HAL_RCC_PWR_CLK_ENABLE();
+  HAL_PWREx_EnableVddIO2();
+  HAL_PWREx_DisableUCPDDeadBattery();
+  HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
+
+  HAL_ICACHE_Invalidate();
+  MX_ICACHE_Init();
   MX_GPIO_Init();
 }
 

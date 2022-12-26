@@ -92,7 +92,7 @@ LoopFillZerobss:
 /* Call the clock system initialization function.*/
     bl  SystemInit
 /* Call static constructors */
-    bl __libc_init_array
+    /* bl __libc_init_array */
 /* Call the application's entry point.*/
 	bl	main
 
@@ -144,7 +144,7 @@ g_pfnVectors:
 	.word	PendSV_Handler
 	.word	SysTick_Handler
 	.word	WWDG_IRQHandler
-	.word	PVD_AVD_IRQHandler
+	.word	PVD_PVM_IRQHandler
 	.word	RTC_IRQHandler
 	.word	RTC_S_IRQHandler
 	.word	TAMP_IRQHandler
@@ -311,8 +311,8 @@ g_pfnVectors:
 	.weak	WWDG_IRQHandler
 	.thumb_set WWDG_IRQHandler,Default_Handler
 
-	.weak	PVD_AVD_IRQHandler
-	.thumb_set PVD_AVD_IRQHandler,Default_Handler
+	.weak	PVD_PVM_IRQHandler
+	.thumb_set PVD_PVM_IRQHandler,Default_Handler
 
 	.weak	RTC_IRQHandler
 	.thumb_set RTC_IRQHandler,Default_Handler

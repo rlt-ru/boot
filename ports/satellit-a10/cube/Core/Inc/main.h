@@ -60,9 +60,8 @@ void Error_Handler(void);
 #define DIN3_Pin GPIO_PIN_2
 #define DIN3_GPIO_Port GPIOE
 #define DIN3_EXTI_IRQn EXTI2_IRQn
-#define DIN4_Pin GPIO_PIN_3
-#define DIN4_GPIO_Port GPIOE
-#define DIN4_EXTI_IRQn EXTI3_IRQn
+#define LED0G_Pin GPIO_PIN_3
+#define LED0G_GPIO_Port GPIOE
 #define DIN5_Pin GPIO_PIN_4
 #define DIN5_GPIO_Port GPIOE
 #define DIN5_EXTI_IRQn EXTI4_IRQn
@@ -93,8 +92,9 @@ void Error_Handler(void);
 #define EX2_INT_Pin GPIO_PIN_13
 #define EX2_INT_GPIO_Port GPIOF
 #define EX2_INT_EXTI_IRQn EXTI13_IRQn
-#define LED0G_Pin GPIO_PIN_14
-#define LED0G_GPIO_Port GPIOF
+#define DIN4_Pin GPIO_PIN_14
+#define DIN4_GPIO_Port GPIOF
+#define DIN4_EXTI_IRQn EXTI14_IRQn
 #define PW_AUX_Pin GPIO_PIN_15
 #define PW_AUX_GPIO_Port GPIOF
 #define PW_P1_Pin GPIO_PIN_0
@@ -110,6 +110,8 @@ void Error_Handler(void);
 #define RS2HF_GPIO_Port GPIOE
 #define SPI2_SCK_Pin GPIO_PIN_13
 #define SPI2_SCK_GPIO_Port GPIOB
+#define SPI2_MISO_Pin GPIO_PIN_14
+#define SPI2_MISO_GPIO_Port GPIOB
 #define SPI2_MOSI_Pin GPIO_PIN_15
 #define SPI2_MOSI_GPIO_Port GPIOB
 #define RS2SEL_Pin GPIO_PIN_10
@@ -131,12 +133,14 @@ void Error_Handler(void);
 #define SPI2_CS2_GPIO_Port GPIOB
 #define BOOT_Pin GPIO_PIN_3
 #define BOOT_GPIO_Port GPIOH
+#define BOOT_EXTI_IRQn EXTI3_IRQn
 #define DIN1_Pin GPIO_PIN_0
 #define DIN1_GPIO_Port GPIOE
 #define DIN1_EXTI_IRQn EXTI0_IRQn
 #define DIN2_Pin GPIO_PIN_1
 #define DIN2_GPIO_Port GPIOE
 #define DIN2_EXTI_IRQn EXTI1_IRQn
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

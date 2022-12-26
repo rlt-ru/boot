@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    dcache.h
+  * @file    adc.h
   * @brief   This file contains all the function prototypes for
-  *          the dcache.c file
+  *          the adc.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __DCACHE_H__
-#define __DCACHE_H__
+#ifndef __ADC_H__
+#define __ADC_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,13 +32,13 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern DCACHE_HandleTypeDef hdcache1;
+extern ADC_HandleTypeDef hadc4;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_DCACHE1_Init(void);
+void MX_ADC4_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -48,5 +48,5 @@ void MX_DCACHE1_Init(void);
 }
 #endif
 
-#endif /* __DCACHE_H__ */
+#endif /* __ADC_H__ */
 

@@ -1,10 +1,8 @@
 #include "app.h"
 #include <stdio.h>
+#include <string.h>
 #include "ff.h"
 #include "crc_posix.h"
-
-#define APP_FIRMWARE_FILE_NAME "FIRMWARE/firmware.fpk"
-#define APP_FIRMWARE_FILE_READY "FIRMWARE/firmware.lst"
 
 typedef void (*app)(void);
 
@@ -170,35 +168,51 @@ int app_flash_file(FIL *f) {
 }
 
 int app_update(void) {
-  FIL f;
-  FRESULT result = f_open(&f, APP_FIRMWARE_FILE_NAME, FA_READ);
-  if (result != FR_OK) {
-    return -1;
-  }
+  FRESULT fr;
+  DIR dj;
+  FILINFO fno;
+  uint8_t file_name1[FF_MAX_LFN + 1];
+  uint8_t file_name2[FF_MAX_LFN - 5 + 1];
+  fr = f_findfirst(&dj, &fno, "firmware", "*.fpk");
+  if (fr == FR_OK && fno.fname[0]) {
+    memset(file_name1, 0, sizeof(file_name1));
+    memset(file_name2, 0, sizeof(file_name2));
 
-  led_off(LED_RED);
-  led_on(LED_GREEN);
+    uint8_t suffix[] = ".last";
+    sprintf((char *) file_name1, "firmware/%s", fno.fname);
+    sprintf((char *) file_name2, "%s%s", file_name1, suffix);
 
-  do {
-    uint32_t file_size = f_size(&f);
-
-    if (app_check_file(&f)) {
-      break;
+    FIL f;
+    FRESULT result = f_open(&f, file_name1, FA_READ);
+    if (result != FR_OK) {
+      return -1;
     }
 
-    if (erase_flash(0, file_size)) {
-      break;
-    }
-    if (app_flash_file(&f)) {
-      break;
-    }
+    led_off(LED_RED);
+    led_on(LED_GREEN);
+
+    do {
+      uint32_t file_size = f_size(&f);
+
+      if (app_check_file(&f)) {
+        break;
+      }
+
+      if (erase_flash(0, file_size)) {
+        break;
+      }
+      if (app_flash_file(&f)) {
+        break;
+      }
+
+      f_close(&f);
+      f_unlink((const char *)file_name2);
+      f_rename(file_name1, file_name2);
+
+      return 0;
+    } while (0);
 
     f_close(&f);
-    f_rename(APP_FIRMWARE_FILE_NAME, APP_FIRMWARE_FILE_READY);
-
-    return 0;
-  } while (0);
-
-  f_close(&f);
+  }
   return -1;
 }
