@@ -31,6 +31,7 @@ void peripheral_init(void) {
 
 void peripheral_reset(void) {
   HAL_DeInit();
+  SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
 
   SystemInit();
 
