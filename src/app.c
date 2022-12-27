@@ -45,7 +45,7 @@ void app_launch(void) {
 
   __disable_irq();
   {
-//    peripheral_reset();
+    peripheral_reset();
 
     SCB->VTOR = APP_BASE_ADDRESS;
     __DSB();

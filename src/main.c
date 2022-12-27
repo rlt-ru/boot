@@ -21,7 +21,6 @@ typedef struct {
 boot_state_t boot_state;
 
 void main(void) {
-  app_launch();
   peripheral_init();
 
   led_on(LED_RED);
@@ -56,9 +55,24 @@ void main(void) {
     led_off(LED_RED);
     led_strob_set(0);
 
+    bool start_pressed_button = button_pressed();
     while (1) {
       led_toggle(LED_GREEN);
-      HAL_Delay(1000);
+      if(start_pressed_button && button_pressed()) {
+        HAL_Delay(500);
+        continue;
+      }
+      start_pressed_button = false;
+
+      cnt = 0;
+      for(int i = 0; i < 50; i++) {
+        cnt += button_pressed() ? 1 : 0;
+        HAL_Delay(10);
+      }
+      if(cnt > 5) {
+        led_off(LED_GREEN);
+        break;
+      }
     }
   } while (0);
 
