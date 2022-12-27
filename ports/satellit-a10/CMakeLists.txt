@@ -15,8 +15,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${MCPU_FLAGS} ${LD_FLAGS} -Wl,--gc-sections,--print-
 
 set(PROJECT_NAME ${PROJECT_NAME}-satellit-a10)
 set(VER_MAJ 0)
-set(VER_MIN 0)
-set(VER_DEV 2)
+set(VER_MIN 1)
+set(VER_DEV 0)
 set(VNAR "ВНАР-X")
 
 # redefine linker-script
