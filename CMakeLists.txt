@@ -19,5 +19,5 @@ set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.c
   ${CMAKE_SOURCE_DIR}/src/crc_posix.c
 )
 
-add_subdirectory(ports/satellit-a)
-add_subdirectory(ports/satellit-a10)
+#add_subdirectory(${CMAKE_SOURCE_DIR}/ports/satellit-a)
+add_subdirectory(${CMAKE_SOURCE_DIR}/ports/satellit-a10)
