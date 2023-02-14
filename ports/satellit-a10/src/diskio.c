@@ -43,7 +43,7 @@ DSTATUS disk_initialize(BYTE pdrv) {
   if (pdrv) {
     return STA_NOINIT;
   } else {
-    HAL_GPIO_WritePin(PW_P0_GPIO_Port, PW_P0_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(PW_RAM_GPIO_Port, PW_RAM_Pin, GPIO_PIN_SET);
 
     MX_SDMMC1_SD_Init();
 
